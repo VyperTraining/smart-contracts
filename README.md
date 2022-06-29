@@ -82,10 +82,20 @@ The following tools are not required but highly recommended for a better coding 
    ```sh
    pip install vyper==0.3.3
    ```
+
+1. Install Black (Code formatter)
+   ```sh
+   pip install black
+   ```
    
 1. Install Ape Worx
    ```sh
    pip install eth-ape
+   ```
+
+1. Install Vyper Plugin
+   ```sh
+   ape plugins install vyper
    ```
    <br />
    <br />
