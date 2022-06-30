@@ -6,7 +6,11 @@
 
 # TODO: 2 Events:
     # 1. GrettingChanged -> every time a greeting is changed
+event GrettingChanged:
+    greeting: String[128]
     # 2. Withdraw -> every time the withdraw function is called
+event Withdraw:
+    value: uint256
 
 # 3. DECLARING STORAGE VARIABLES
 greeting: String[122]
@@ -38,7 +42,9 @@ def setGreeting(_greeting: String[122]):
     self.lastChanger = msg.sender
     self.greeting = _greeting
     self.price = self.price * 2
+    log GrettingChanged(self.greeting)
 
 @external
 def withdraw():
     send(self.owner, self.balance)
+    log Withdraw(self.balance)
