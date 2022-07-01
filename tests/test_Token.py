@@ -44,7 +44,7 @@ def test_transferFrom(token_contract, owner, bob):
     assert token_contract.balanceOf(owner) == ownerBalance - value
 
 
-def test_transferFromShouldFailIfExceedsAllowance(token_contract, owner, bob):
+def test_transferFromShouldFailIfExceedsAllowance(token_contract, owner, bob, alice):
     value = 1000
 
     token_contract.approve(bob, value, sender=owner)
@@ -52,7 +52,7 @@ def test_transferFromShouldFailIfExceedsAllowance(token_contract, owner, bob):
     ownerBalance = token_contract.balanceOf(owner)
 
     with ape.reverts():
-        token_contract.transferFrom(owner, bob, value + 1, sender=bob)
+        token_contract.transferFrom(owner, alice, value + 1, sender=bob)
 
     assert token_contract.balanceOf(bob) == 0
     assert token_contract.balanceOf(owner) == ownerBalance
