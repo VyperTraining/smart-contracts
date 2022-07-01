@@ -10,6 +10,10 @@ def owner(accounts):
 def bob(accounts):
     return accounts[1]
 
+@pytest.fixture(scope="session")
+def alice(accounts):
+    return accounts[2]
+
 
 @pytest.fixture(scope="session")
 def hello_world_contract(owner, project):
