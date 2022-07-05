@@ -3,5 +3,6 @@
   "editor.defaultFormatter": "ms-python.python",
   "python.testing.pytestEnabled": true,
   "python.defaultInterpreterPath": "~/.pyenv/versions/3.9.8/envs/vyper-training/bin/python",
-  "python.terminal.activateEnvironment": false
+  "python.terminal.activateEnvironment": false,
+  "vyper.command": "~/.pyenv/versions/3.9.8/envs/vyper-training/bin/vyper"
 }
