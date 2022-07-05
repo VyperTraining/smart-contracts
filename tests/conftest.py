@@ -10,6 +10,7 @@ def owner(accounts):
 def bob(accounts):
     return accounts[1]
 
+
 @pytest.fixture(scope="session")
 def alice(accounts):
     return accounts[2]
@@ -23,3 +24,8 @@ def hello_world_contract(owner, project):
 @pytest.fixture(scope="session")
 def token_contract(owner, project):
     return owner.deploy(project.Token, 10000, "Vyper Training Token", "VTT", 18)
+
+
+@pytest.fixture(scope="session")
+def nft_contract(owner, project):
+    return owner.deploy(project.NFT)
