@@ -109,3 +109,14 @@ def test_approval_revoke_on_transfer(nft_contract, bob, alice, owner):
     nft_contract.transferFrom(owner, bob, 12, sender=alice)
     assert nft_contract.balanceOf(bob) == 1
     assert nft_contract.balanceOf(owner) == 0
+
+
+def test_transfer_to_contract(nft_contract, bob, receiver_contract):
+    nft_contract.mint(bob, 12, sender=bob)
+    assert nft_contract.balanceOf(bob) == 1
+    assert nft_contract.ownerOf(12) == bob
+
+    nft_contract.safeTransferFrom(bob, receiver_contract, 12, sender=bob)
+    assert nft_contract.balanceOf(bob) == 0
+    assert nft_contract.balanceOf(receiver_contract) == 1
+    assert nft_contract.ownerOf(12) == receiver_contract
