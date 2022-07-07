@@ -83,3 +83,19 @@ def updateDescription(_description: String[128], _taskId: uint256):
 
     task.description = _description
     self.idToTask[_taskId] = task
+
+@external
+@nonpayable
+def updateTask(_status: uint8, _description: String[128], _taskId: uint256):
+    assert _status in STATUSES, "INVALID STATUS"
+    assert _description != empty(String[128]), "DESCRIPTION CAN NOT BE EMPTY"
+
+    task: Task = self._getTask(_taskId, msg.sender)
+
+    task.status = _status
+    task.description = _description
+    self.idToTask[_taskId] = task
+
+
+
+    

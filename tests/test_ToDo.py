@@ -54,3 +54,19 @@ def test_update_task_description(todo_contract, owner, create_task):
 
     task = todo_contract.idToTask(taskId)
     assert task.description == description
+
+
+def test_update_task(todo_contract, owner, create_task):
+    description = "Exercise!"
+    taskId = create_task(0, description, owner)
+
+    task = todo_contract.idToTask(taskId)
+    assert task.description == description
+    assert task.status == 0
+
+    description = "Eat more!"
+    todo_contract.updateTask(1, description, taskId, sender=owner)
+
+    task = todo_contract.idToTask(taskId)
+    assert task.description == description
+    assert task.status == 1
