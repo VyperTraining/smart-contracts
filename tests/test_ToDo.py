@@ -1,12 +1,21 @@
 import pytest
 
 
-def test_create_task(todo_contract, owner):
+@pytest.fixture()
+def create_task(todo_contract):
+    def create_task(_status, _description, _owner):
+        todo_contract.createTask(_status, _description, sender=_owner)
+        return todo_contract.totalTasks()
+
+    return create_task
+
+
+def test_create_task(todo_contract, owner, create_task):
     description = "write more tests"
 
     assert todo_contract.totalTasks() == 0
 
-    todo_contract.createTask(0, description, sender=owner)
+    create_task(0, description, owner)
 
     assert todo_contract.totalTasks() == 1
     assert todo_contract.totalUserTasks(owner) == 1
