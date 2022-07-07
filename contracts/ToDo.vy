@@ -21,12 +21,27 @@ IN_PROGRESS: constant(uint8) = 1
 COMPLETE: constant(uint8) = 2
 STATUSES: constant(uint8[3]) = [OPEN, IN_PROGRESS, COMPLETE]
 
+statusName: public(HashMap[uint8, String[11]])
+statusCode: public(HashMap[String[11], uint8])
+
 totalTasks: public(uint256)
 idToTask: public(HashMap[uint256, Task])
 totalUserTasks: public(HashMap[address, uint256])
 userTaskAt: public(HashMap[address, HashMap[uint256, uint256]])
 
 # 4. DECLARING CALLS AND FUNCTIONS
+
+@external
+@nonpayable
+def __init__():
+    self.statusName[OPEN] = 'OPEN'
+    self.statusName[IN_PROGRESS] = 'IN_PROGRESS'
+    self.statusName[COMPLETE] = 'COMPLETE'
+    
+    self.statusCode['OPEN'] = OPEN
+    self.statusCode['IN_PROGRESS'] = IN_PROGRESS
+    self.statusCode['COMPLETE'] = COMPLETE
+
 
 @external
 @nonpayable
@@ -83,6 +98,7 @@ def updateDescription(_description: String[128], _taskId: uint256):
 
     task.description = _description
     self.idToTask[_taskId] = task
+
 
 @external
 @nonpayable

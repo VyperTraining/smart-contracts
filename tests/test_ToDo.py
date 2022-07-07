@@ -65,7 +65,9 @@ def test_update_task(todo_contract, owner, create_task):
     assert task.status == 0
 
     description = "Eat more!"
-    todo_contract.updateTask(1, description, taskId, sender=owner)
+    todo_contract.updateTask(
+        todo_contract.statusCode("IN_PROGRESS"), description, taskId, sender=owner
+    )
 
     task = todo_contract.idToTask(taskId)
     assert task.description == description
