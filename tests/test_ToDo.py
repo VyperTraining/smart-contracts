@@ -28,3 +28,29 @@ def test_create_task(todo_contract, owner, create_task):
     assert task.status == 0
     assert task.owner == owner
     assert task.taskId == taskId
+
+
+def test_update_task_status(todo_contract, owner, create_task):
+    taskId = create_task(0, "Exercise!", owner)
+
+    task = todo_contract.idToTask(taskId)
+    assert task.status == 0
+
+    todo_contract.updateStatus(1, taskId, sender=owner)
+
+    task = todo_contract.idToTask(taskId)
+    assert task.status == 1
+
+
+def test_update_task_description(todo_contract, owner, create_task):
+    description = "Exercise!"
+    taskId = create_task(0, description, owner)
+
+    task = todo_contract.idToTask(taskId)
+    assert task.description == description
+
+    description = "Eat more!"
+    todo_contract.updateDescription(description, taskId, sender=owner)
+
+    task = todo_contract.idToTask(taskId)
+    assert task.description == description

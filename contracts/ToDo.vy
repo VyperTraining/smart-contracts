@@ -50,3 +50,36 @@ def createTask(_status: uint8, _description: String[128]):
     self.userTaskAt[msg.sender][taskCount] = taskId
 
     self.totalUserTasks[msg.sender] += 1
+
+
+@internal
+@view
+def _getTask(_taskId: uint256, _owner: address) -> Task:
+    assert _taskId <= self.totalTasks, "INVALID TASK ID"
+
+    task: Task = self.idToTask[_taskId]
+    assert task.owner == _owner, "MIND YOUR BUSINESS"
+
+    return task
+
+
+@external
+@nonpayable
+def updateStatus(_status: uint8, _taskId: uint256):
+    assert _status in STATUSES, "INVALID STATUS"
+
+    task: Task = self._getTask(_taskId, msg.sender)
+
+    task.status = _status
+    self.idToTask[_taskId] = task
+
+
+@external
+@nonpayable
+def updateDescription(_description: String[128], _taskId: uint256):
+    assert _description != empty(String[128]), "DESCRIPTION CAN NOT BE EMPTY"
+
+    task: Task = self._getTask(_taskId, msg.sender)
+
+    task.description = _description
+    self.idToTask[_taskId] = task
