@@ -29,3 +29,8 @@ def token_contract(owner, project):
 @pytest.fixture(scope="session")
 def nft_contract(owner, project):
     return owner.deploy(project.NFT)
+
+
+@pytest.fixture(scope="session")
+def receiver_contract(owner, project):
+    return owner.deploy(project.NFTReceiver)
