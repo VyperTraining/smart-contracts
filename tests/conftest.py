@@ -34,3 +34,7 @@ def nft_contract(owner, project):
 @pytest.fixture(scope="session")
 def todo_contract(owner, project):
     return owner.deploy(project.ToDo)
+
+
+def receiver_contract(owner, project):
+    return owner.deploy(project.NFTReceiver)
