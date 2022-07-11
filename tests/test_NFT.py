@@ -117,12 +117,15 @@ def test_transfer_to_contract(nft_contract, bob, receiver_contract):
     assert nft_contract.balanceOf(receiver_contract) == 0
     assert nft_contract.ownerOf(12) == bob
 
+    receiver_contract.setOwner(nft_contract, 12, sender=bob)
     nft_contract.safeTransferFrom(bob, receiver_contract, 12, sender=bob)
     assert nft_contract.balanceOf(bob) == 0
     assert nft_contract.balanceOf(receiver_contract) == 1
     assert nft_contract.ownerOf(12) == receiver_contract
 
-    receiver_contract.returnToken(nft_contract, 12, sender=bob)
+    receiver_contract.withdraw(nft_contract, 12, sender=bob)
     assert nft_contract.balanceOf(bob) == 1
     assert nft_contract.balanceOf(receiver_contract) == 0
     assert nft_contract.ownerOf(12) == bob
+    nft_contract.safeTransferFrom(bob, receiver_contract, 12, sender=bob)
+    assert nft_contract.ownerOf(12) == receiver_contract
